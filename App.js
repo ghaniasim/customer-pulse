@@ -1,21 +1,20 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Testing Travis</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import LoginScreen from "./components/login";
+import SignupScreen from "./components/signup";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+const navigator = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Signup: SignupScreen,
   },
-});
+  {
+    initialRouteName: "Login",
+    defaultNavigationOptions: {
+      title: "App",
+    },
+  }
+);
+
+export default createAppContainer(navigator);
