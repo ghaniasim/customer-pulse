@@ -39,6 +39,8 @@ const LoginScreen = ({ navigation }) => {
         setEmail("");
         setPassword("");
       });
+
+    navigation.navigate("Profile");
   };
 
   return (
@@ -57,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
         maxLength={15}
         secureTextEntry={true}
       />
-      <Button color="#3740FE" title="Signin" onPress={() => userLogin()} />
+      <Button color="#3740FE" title="Sign in" onPress={() => userLogin()} />
 
       <Text
         style={styles.loginText}
