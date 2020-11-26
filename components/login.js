@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         console.log("User logged-in successfully!");
         setLoading(false);
         setEmail("");
@@ -82,11 +82,14 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     width: "100%",
-    marginBottom: 15,
-    paddingBottom: 15,
+    marginBottom: 50,
+    paddingBottom: 10,
     alignSelf: "center",
     borderColor: "#ccc",
     borderBottomWidth: 1,
+  },
+  loginText: {
+    padding: 30,
   },
 });
 

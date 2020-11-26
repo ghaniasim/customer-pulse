@@ -27,7 +27,7 @@ const SignupScreen = ({ navigation }) => {
     }
   };
 
-  registerUser = () => {
+  const registerUser = () => {
     if ({ email } === "" && { password } === "") {
       Alert.alert("Enter details to signup!");
     } else {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     width: "100%",
-    marginBottom: 15,
+    marginBottom: 50,
     paddingBottom: 15,
     alignSelf: "center",
     borderColor: "#ccc",
