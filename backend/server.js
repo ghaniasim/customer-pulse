@@ -24,6 +24,7 @@ mongoose.connect(connection_url, {
 // API endpoints
 app.get("/", (req, res) => res.status(200).send("Hello Feedback Backend!"));
 
+// Find all feedbacks
 app.get("/feedbacks", (req, res) => {
   Feedbacks.find((err, data) => {
     if (err) {
@@ -34,6 +35,18 @@ app.get("/feedbacks", (req, res) => {
   });
 });
 
+// Find surveys by teacher name
+app.get("/feedbacks/:teacherName", (req, res) => {
+  Feedbacks.find({ teacherName: req.params.teacherName }, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
+// Post a survey
 app.post("/feedbacks/survey", (req, res) => {
   const dbSurvey = req.body;
 
