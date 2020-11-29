@@ -9,72 +9,69 @@ import {
   Button,
 } from "react-native";
 import firebase from "../database/firebase";
-import Data from "./Data";
-import Detail from "./Detail";
 
+var userEmail;
 const Profile = (props) => {
-  var userName, userEmail;
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      firebase.auth().currentUser;
+      userEmail = user.email;
+      console.log("userEmail:", userEmail);
+    }
+  });
 
-  const [loaded, setLoading] = useState(false);
+  const [surveys, setSurveys] = useState();
+  const [loaded, setLoaded] = useState(false);
 
-  function getCurrentUser() {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        var currentUser = firebase.auth().currentUser;
-
-        userName = user.displayName;
-
-        userEmail = user.email;
-
-        /* if (user != null) {
-          setLoading(true);
-          userName = user.name;
-          userEmail = user.email;
-          //window.alert("success " + email);
-        }*/
-      }
-    });
+  async function getData() {
+    const res = await fetch(`http://192.168.1.223:8001/feedbacks/Kashif`);
+    res
+      .json()
+      .then((res) => {
+        setSurveys(res);
+        setLoaded(true);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   }
 
-  getCurrentUser();
+  getData();
 
-  const surveyArray = Data;
+  if (loaded) {
+    console.log("surveyData", surveys);
+  }
 
-  console.log("ABC", surveyArray);
-
-  //console.log("userEmail", userEmail);
-
-  //{loaded ? { userEmail } : <h1>Loading ...</h1>}
   return (
     <View style={{ flex: 1 }}>
-      <Text style={styles.profileText}>Profile {userEmail}</Text>
+      <View styles={{ marginBottom: 20 }}>
+        <Text style={styles.profileText}>Profile </Text>
 
-      <Text style={styles.nameText}>John Doe</Text>
-      <Text style={styles.nameText}>Las Vegas, USA</Text>
+        <Text style={styles.nameText}>{userEmail}</Text>
 
-      <TouchableOpacity
-        onPress={() => {
-          props.navigation.navigate("SurveyType");
-        }}
-        style={styles.roundButton1}
-      >
-        <Text style={{ fontSize: 60 }}>+</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Signup");
+          }}
+          style={styles.roundButton1}
+        >
+          <Text style={{ fontSize: 60 }}>+</Text>
+        </TouchableOpacity>
+      </View>
 
       <FlatList
+        style={{ marginTop: "15%", margin: "5%" }}
         keyExtractor={(survey) => survey.id}
-        data={surveyArray}
+        data={surveys}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                <Detail id={item.id} />;
-                console.log("item.id", item.id);
-                props.navigation.navigate("Detail");
+                console.log("pressed");
               }}
             >
-              <Text style={styles.surveyTitle}>{item.name}</Text>
+              <Text style={styles.surveyTitle}>{item.surveyName}</Text>
             </TouchableOpacity>
           );
         }}
