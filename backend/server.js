@@ -46,6 +46,17 @@ app.get("/feedbacks/:teacherName", (req, res) => {
   });
 });
 
+//fetch by survey object id
+app.get("/feedbacks/id/:surveyId", (req, res) => {
+  Feedbacks.findById(req.params.surveyId, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
 // Post a survey
 app.post("/feedbacks/survey", (req, res) => {
   const dbSurvey = req.body;

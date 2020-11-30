@@ -4,25 +4,21 @@ import { createStackNavigator } from "react-navigation-stack";
 import LoginScreen from "./components/login";
 import SignupScreen from "./components/signup";
 import Profile from "./components/profile";
-import Detail from "./components/Detail";
-import CreateSurvey from "./components/CreateSurvey";
-import SurveyType from "./components/SurveyType";
-import MCQsurvey from "./components/MCQsurvey";
-import YNsurvey from "./components/YNsurvey";
+import Survey from "./components/survey";
+import Create from "./components/create";
+import Answers from "./components/answers";
 
 const navigator = createStackNavigator(
   {
     Login: LoginScreen,
     Signup: SignupScreen,
     Profile: Profile,
-    Detail: Detail,
-    CreateSurvey: CreateSurvey,
-    SurveyType: SurveyType,
-    MCQsurvey: MCQsurvey,
-    YNsurvey: YNsurvey,
+    Survey: Survey,
+    Create: Create,
+    Answers: Answers,
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "Profile",
     defaultNavigationOptions: {
       title: "App",
     },
