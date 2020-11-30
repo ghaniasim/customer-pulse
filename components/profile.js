@@ -1,14 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   FlatList,
-  Button,
 } from "react-native";
 import firebase from "../database/firebase";
+import Survey from "./survey";
 
 var userEmail;
 const Profile = (props) => {
@@ -36,7 +35,9 @@ const Profile = (props) => {
       });
   }
 
-  getData();
+  useEffect(() => {
+    getData();
+  }, []);
 
   if (loaded) {
     console.log("surveyData", surveys);
@@ -68,7 +69,9 @@ const Profile = (props) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                console.log("pressed");
+                props.navigation.navigate("Survey", {
+                  id: item,
+                });
               }}
             >
               <Text style={styles.surveyTitle}>{item.surveyName}</Text>
