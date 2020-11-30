@@ -5,6 +5,8 @@ import LoginScreen from "./components/login";
 import SignupScreen from "./components/signup";
 import Profile from "./components/profile";
 import Survey from "./components/survey";
+import Create from "./components/create";
+import Answers from "./components/answers";
 
 const navigator = createStackNavigator(
   {
@@ -12,6 +14,8 @@ const navigator = createStackNavigator(
     Signup: SignupScreen,
     Profile: Profile,
     Survey: Survey,
+    Create: Create,
+    Answers: Answers,
   },
   {
     initialRouteName: "Profile",

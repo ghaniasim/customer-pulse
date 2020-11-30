@@ -8,16 +8,22 @@ import {
 } from "react-native";
 import firebase from "../database/firebase";
 import Survey from "./survey";
+import Create from "./create";
 
 var userEmail;
 const Profile = (props) => {
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      firebase.auth().currentUser;
-      userEmail = user.email;
-      console.log("userEmail:", userEmail);
-    }
-  });
+  function getCurrentUser() {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        firebase.auth().currentUser;
+        userEmail = user.email;
+      }
+    });
+  }
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [userEmail]);
 
   const [surveys, setSurveys] = useState();
   const [loaded, setLoaded] = useState(false);
@@ -39,10 +45,6 @@ const Profile = (props) => {
     getData();
   }, []);
 
-  if (loaded) {
-    console.log("surveyData", surveys);
-  }
-
   return (
     <View style={{ flex: 1 }}>
       <View styles={{ marginBottom: 20 }}>
@@ -52,7 +54,7 @@ const Profile = (props) => {
 
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate("Signup");
+            props.navigation.navigate("Create");
           }}
           style={styles.roundButton1}
         >
@@ -70,7 +72,7 @@ const Profile = (props) => {
               style={styles.button}
               onPress={() => {
                 props.navigation.navigate("Survey", {
-                  id: item,
+                  survey: item,
                 });
               }}
             >
