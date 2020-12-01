@@ -54,7 +54,7 @@ const Profile = (props) => {
 
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate("Create");
+            props.navigation.navigate("Create", { teacherName: userEmail });
           }}
           style={styles.roundButton1}
         >

@@ -7,6 +7,7 @@ import Profile from "./components/profile";
 import Survey from "./components/survey";
 import Create from "./components/create";
 import Answers from "./components/answers";
+import Question from "./components/question";
 
 const navigator = createStackNavigator(
   {
@@ -16,6 +17,7 @@ const navigator = createStackNavigator(
     Survey: Survey,
     Create: Create,
     Answers: Answers,
+    Question: Question,
   },
   {
     initialRouteName: "Profile",
