@@ -53,6 +53,15 @@ const Profile = (props) => {
         <Text style={styles.nameText}>{userEmail}</Text>
 
         <TouchableOpacity
+          style={styles.viewButton}
+          onPress={() => {
+            props.navigation.navigate("Data");
+          }}
+        >
+          <Text>View Surveys</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           onPress={() => {
             props.navigation.navigate("Create", { teacherName: userEmail });
           }}
@@ -63,7 +72,7 @@ const Profile = (props) => {
       </View>
 
       <FlatList
-        style={{ marginTop: "15%", margin: "5%" }}
+        style={{ marginTop: "8%", margin: "5%" }}
         keyExtractor={(survey) => survey.id}
         data={surveys}
         renderItem={({ item }) => {
@@ -92,6 +101,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+  },
+  viewButton: {
+    backgroundColor: "#ade8f4",
+    height: 50,
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#000000",
+    marginTop: "5%",
   },
   button: {
     shadowColor: "rgba(0,0,0, .4)", // IOS

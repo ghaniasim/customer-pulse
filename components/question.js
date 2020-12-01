@@ -11,14 +11,24 @@ const Question = () => {
   const [questionNumber, setQuestionNumber] = useState();
   const [questionType, setQuestionType] = useState("");
   const [questionText, setQuestionText] = useState("");
+
   return (
     <View>
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="Write your question"
-        value={questionText}
-        onChangeText={setQuestionText}
-      />
+      <View>
+        <TextInput
+          style={styles.inputStyle}
+          placeholder="Write question number"
+          value={questionNumber}
+          onChangeText={setQuestionNumber}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          placeholder="Write your question"
+          value={questionText}
+          onChangeText={setQuestionText}
+        />
+      </View>
+
       <View>
         <Text style={styles.chooseText}>Choose answer category:</Text>
         <TouchableOpacity style={styles.button}>
@@ -31,6 +41,9 @@ const Question = () => {
           <Text>MCQ</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.buttonBottom}>
+        <Text>Add</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -55,6 +68,17 @@ const styles = StyleSheet.create({
     borderColor: "#000000",
     marginTop: "5%",
     marginLeft: "20%",
+  },
+  buttonBottom: {
+    backgroundColor: "#ade8f4",
+    height: 50,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#000000",
+    marginTop: "50%",
   },
   inputStyle: {
     width: "80%",

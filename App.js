@@ -8,6 +8,8 @@ import Survey from "./components/survey";
 import Create from "./components/create";
 import Answers from "./components/answers";
 import Question from "./components/question";
+import Data from "./components/data";
+import SurveyObject from "./components/object";
 
 const navigator = createStackNavigator(
   {
@@ -18,6 +20,8 @@ const navigator = createStackNavigator(
     Create: Create,
     Answers: Answers,
     Question: Question,
+    Data: Data,
+    SurveyObject: SurveyObject,
   },
   {
     initialRouteName: "Profile",
