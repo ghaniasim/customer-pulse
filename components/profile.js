@@ -1,80 +1,91 @@
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   FlatList,
-  Button,
 } from "react-native";
 import firebase from "../database/firebase";
-import Data from "./Data";
-import Detail from "./Detail";
+import Survey from "./survey";
+import Create from "./create";
 
+var userEmail;
 const Profile = (props) => {
-  var userName, userEmail;
-
-  const [loaded, setLoading] = useState(false);
-
   function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        var currentUser = firebase.auth().currentUser;
-
-        userName = user.displayName;
-
+        firebase.auth().currentUser;
         userEmail = user.email;
-
-        /* if (user != null) {
-          setLoading(true);
-          userName = user.name;
-          userEmail = user.email;
-          //window.alert("success " + email);
-        }*/
       }
     });
   }
 
-  getCurrentUser();
+  useEffect(() => {
+    getCurrentUser();
+  }, [userEmail]);
 
-  const surveyArray = Data;
+  const [surveys, setSurveys] = useState();
+  const [loaded, setLoaded] = useState(false);
 
-  console.log("ABC", surveyArray);
+  async function getData() {
+    const res = await fetch(`http://192.168.1.223:8001/feedbacks/Kashif`);
+    res
+      .json()
+      .then((res) => {
+        setSurveys(res);
+        setLoaded(true);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
 
-  //console.log("userEmail", userEmail);
+  useEffect(() => {
+    getData();
+  }, []);
 
-  //{loaded ? { userEmail } : <h1>Loading ...</h1>}
   return (
     <View style={{ flex: 1 }}>
-      <Text style={styles.profileText}>Profile {userEmail}</Text>
+      <View styles={{ marginBottom: 20 }}>
+        <Text style={styles.profileText}>Profile </Text>
 
-      <Text style={styles.nameText}>John Doe</Text>
-      <Text style={styles.nameText}>Las Vegas, USA</Text>
+        <Text style={styles.nameText}>{userEmail}</Text>
 
-      <TouchableOpacity
-        onPress={() => {
-          props.navigation.navigate("SurveyType");
-        }}
-        style={styles.roundButton1}
-      >
-        <Text style={{ fontSize: 60 }}>+</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.viewButton}
+          onPress={() => {
+            props.navigation.navigate("Data");
+          }}
+        >
+          <Text>View Surveys</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Create", { teacherName: userEmail });
+          }}
+          style={styles.roundButton1}
+        >
+          <Text style={{ fontSize: 60 }}>+</Text>
+        </TouchableOpacity>
+      </View>
 
       <FlatList
+        style={{ marginTop: "8%", margin: "5%" }}
         keyExtractor={(survey) => survey.id}
-        data={surveyArray}
+        data={surveys}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                <Detail id={item.id} />;
-                console.log("item.id", item.id);
-                props.navigation.navigate("Detail");
+                props.navigation.navigate("Survey", {
+                  survey: item,
+                });
               }}
             >
-              <Text style={styles.surveyTitle}>{item.name}</Text>
+              <Text style={styles.surveyTitle}>{item.surveyName}</Text>
             </TouchableOpacity>
           );
         }}
@@ -90,6 +101,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+  },
+  viewButton: {
+    backgroundColor: "#ade8f4",
+    height: 50,
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#000000",
+    marginTop: "5%",
   },
   button: {
     shadowColor: "rgba(0,0,0, .4)", // IOS

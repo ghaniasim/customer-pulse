@@ -1,91 +1,85 @@
-var Data = [
-  {
-    id: 1,
-    name: "Survey 1",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 2,
-    name: "Survey 2",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 3,
-    name: "Survey 3",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 4,
-    name: "Survey 4",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 5,
-    name: "Survey 5",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 6,
-    name: "Survey 6",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 7,
-    name: "Survey 7",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 8,
-    name: "Survey 8",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 9,
-    name: "Survey 9",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 10,
-    name: "Survey 10",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 11,
-    name: "Survey 11",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 12,
-    name: "Survey 12",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-  {
-    id: 13,
-    name: "Survey 13",
-    q1: "Do you prefer to have a midterm exam?",
-    q2: "Do you want to write a research paper in this term?",
-  },
-];
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 
-/*const pithi = {
-  id: 14,
-  name: "Survey 14",
-  q1: "Do you prefer to have a midterm exam?",
-  q2: "Do you want to write a research paper in this term?",
+const Data = ({ navigation }) => {
+  const [data, setData] = useState();
+  const [loaded, setLoaded] = useState(false);
+
+  async function getData() {
+    const res = await fetch(`http://192.168.1.223:8001/feedbacks`);
+    res
+      .json()
+      .then((res) => {
+        setData(res);
+        setLoaded(true);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+
+  useEffect(() => {
+    getData();
+  }, [data]);
+  return (
+    <View>
+      <FlatList
+        style={{ marginTop: "15%", margin: "5%" }}
+        keyExtractor={(survey) => survey.id}
+        data={data}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("SurveyObject", {
+                  survey: item,
+                });
+              }}
+            >
+              <Text style={styles.surveyTitle}>
+                {item.surveyName} by {item.teacherName}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+      ></FlatList>
+    </View>
+  );
 };
 
-Data.push(pithi);*/
-
 export default Data;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: "15%",
+    paddingTop: "7%",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  button: {
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    backgroundColor: "#ade8f4",
+    elevation: 2, // Android
+    height: 50,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#000000",
+    marginTop: 10,
+  },
+});
