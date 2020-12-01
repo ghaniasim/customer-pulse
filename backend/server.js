@@ -59,5 +59,22 @@ app.post("/feedbacks/survey", (req, res) => {
   });
 });
 
+// Submit answers by student
+app.patch("/feedbacks/questions/:id", (req, res) => {
+  Feedbacks.updateOne(
+    { "questions._id": req.params.id },
+    {
+      $push: { "questions.$.answers": req.body },
+    },
+    (err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(201).send(data);
+      }
+    }
+  );
+});
+
 // Listener
 app.listen(port, () => console.log(`listening on localhost: ${port}`));
