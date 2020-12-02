@@ -7,8 +7,6 @@ import {
   FlatList,
 } from "react-native";
 import firebase from "../database/firebase";
-import Survey from "./survey";
-import Create from "./create";
 
 var userEmail;
 const Profile = (props) => {

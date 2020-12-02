@@ -5,11 +5,11 @@ import LoginScreen from "./components/login";
 import SignupScreen from "./components/signup";
 import Profile from "./components/profile";
 import Survey from "./components/survey";
-import Create from "./components/create";
+import Create from "./components/question/create";
 import Answers from "./components/answers";
-import Question from "./components/question";
 import Data from "./components/data";
 import SurveyObject from "./components/object";
+import Post from "./components/question/post";
 
 const navigator = createStackNavigator(
   {
@@ -19,9 +19,9 @@ const navigator = createStackNavigator(
     Survey: Survey,
     Create: Create,
     Answers: Answers,
-    Question: Question,
     Data: Data,
     SurveyObject: SurveyObject,
+    Post: Post,
   },
   {
     initialRouteName: "Profile",
