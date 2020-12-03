@@ -7,8 +7,6 @@ import {
   FlatList,
 } from "react-native";
 import firebase from "../database/firebase";
-import Survey from "./survey";
-import Create from "./create";
 
 var userEmail;
 const Profile = (props) => {
@@ -29,7 +27,7 @@ const Profile = (props) => {
   const [loaded, setLoaded] = useState(false);
 
   async function getData() {
-    const res = await fetch(`http://192.168.1.223:8001/feedbacks/Kashif`);
+    const res = await fetch(`http://192.168.1.223:8001/feedbacks/${userEmail}`);
     res
       .json()
       .then((res) => {
