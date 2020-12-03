@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   FlatList,
   Button,
+  ScrollView,
 } from "react-native";
 
 const Answers = ({ route, navigation }) => {
@@ -34,9 +35,12 @@ const Answers = ({ route, navigation }) => {
         data={answers}
         renderItem={({ item }) => {
           return (
-            <View style={styles.button}>
-              <Text style={{ margin: "5%" }}>{item.answer}</Text>
-            </View>
+            <ScrollView>
+              <Text>{item.studentName}</Text>
+              <View style={styles.button}>
+                <Text style={{ margin: "5%" }}>{item.answer}</Text>
+              </View>
+            </ScrollView>
           );
         }}
       ></FlatList>

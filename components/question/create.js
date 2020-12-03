@@ -142,7 +142,7 @@ const Create = ({ navigation }) => {
         style={styles.buttonBottom}
         onPress={() => {
           navigation.navigate("Post", { survey: surveyObject });
-          console.log("survey object is here:", surveyObject);
+          //console.log("survey object is here:", surveyObject);
         }}
       >
         <Text>Create Survey</Text>

@@ -27,7 +27,7 @@ const Profile = (props) => {
   const [loaded, setLoaded] = useState(false);
 
   async function getData() {
-    const res = await fetch(`http://192.168.1.223:8001/feedbacks/Kashif`);
+    const res = await fetch(`http://192.168.1.223:8001/feedbacks/${userEmail}`);
     res
       .json()
       .then((res) => {
