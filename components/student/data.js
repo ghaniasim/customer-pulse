@@ -29,6 +29,8 @@ const Data = ({ navigation }) => {
   }, [data]);
   return (
     <View>
+      <Text style={styles.createSurvey}>Student Profile</Text>
+      <Text style={styles.createSurvey}>Student Name</Text>
       <FlatList
         style={{ marginTop: "15%", margin: "5%" }}
         keyExtractor={(survey) => survey.id}
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingLeft: "15%",
-    paddingTop: "7%",
+    paddingTop: "3%",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
@@ -80,6 +82,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 3,
     borderColor: "#000000",
-    marginTop: 10,
+    marginTop: 5,
+  },
+  createSurvey: {
+    textAlign: "center",
+    color: "#023e8a",
+    fontWeight: "bold",
+    fontSize: 30,
+    width: "100%",
+    marginBottom: 5,
+    marginTop: "3%",
   },
 });
