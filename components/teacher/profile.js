@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import firebase from "../database/firebase";
+import firebase from "../../database/firebase";
 
 var userEmail;
 const Profile = (props) => {
@@ -41,7 +41,7 @@ const Profile = (props) => {
 
   useEffect(() => {
     getData();
-  }, []);
+  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -56,7 +56,7 @@ const Profile = (props) => {
             props.navigation.navigate("Data");
           }}
         >
-          <Text>View Surveys</Text>
+          <Text>Student HomePage</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

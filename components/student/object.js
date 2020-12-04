@@ -8,11 +8,45 @@ import {
   FlatList,
   Button,
 } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 
 const SurveyObject = ({ route, navigation }) => {
   const [survey, setSurvey] = useState(navigation.state.params.survey);
 
   const questions = survey.questions;
+
+  const [num, setNum] = useState(0);
+
+  const displayQuestion = questions[num].questionText;
+
+  const id = questions[num]._id;
+
+  const questionType = questions[num].questionType;
+
+  var response;
+
+  function updateQuestionType(type) {
+    if (type === "Text") {
+      response = <TextInput style={styles.inputStyle}></TextInput>;
+    }
+    if (type === "MCQ") {
+      response = <Text>MCQ</Text>;
+    }
+    if (type === "YESNO") {
+      response = (
+        <View>
+          <TouchableOpacity style={styles.button}>
+            <Text>Yes</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text>No</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
+  updateQuestionType(questionType);
 
   return (
     <View style={styles.container}>
@@ -21,31 +55,18 @@ const SurveyObject = ({ route, navigation }) => {
       <Text style={styles.numberOfQuestions}>
         Total number of questions: {questions.length}
       </Text>
-      <FlatList
-        keyExtractor={(question) => question._id}
-        data={questions}
-        renderItem={({ item }) => {
-          return (
-            <View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  navigation.navigate("Answers", {
-                    questionObject: item,
-                  });
-                }}
-              >
-                <Text>
-                  {item.questionNumber} :{item.questionText}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.viewButton}>
-                <Text>Reply</Text>
-              </TouchableOpacity>
-            </View>
-          );
+      <Text>{displayQuestion}</Text>
+      <Text>{id}</Text>
+      <Text>{questionType}</Text>
+      <View>{response}</View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setNum(num + 1);
         }}
-      ></FlatList>
+      >
+        <Text>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -102,6 +123,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     width: "100%",
     marginBottom: 20,
+  },
+  inputStyle: {
+    width: "100%",
+    marginBottom: 50,
+    marginTop: 40,
+    paddingBottom: 5,
+    alignSelf: "center",
+    borderColor: "#ccc",
+    borderBottomWidth: 1,
   },
 });
 
