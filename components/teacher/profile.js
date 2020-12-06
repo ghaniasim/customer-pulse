@@ -39,6 +39,10 @@ const Profile = (props) => {
       });
   }
 
+  if (loaded) {
+    surveys.reverse();
+  }
+
   useEffect(() => {
     getData();
   });

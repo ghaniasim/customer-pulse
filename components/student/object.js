@@ -10,9 +10,11 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
+//Obtaining the entire survey object from previous screen (Data.js)
 const SurveyObject = ({ route, navigation }) => {
   const [survey, setSurvey] = useState(navigation.state.params.survey);
 
+  //taking out the questions array
   const questions = survey.questions;
 
   const [num, setNum] = useState(0);
@@ -25,9 +27,18 @@ const SurveyObject = ({ route, navigation }) => {
 
   var response;
 
+  const [answer, setAnswer] = useState("");
+
   function updateQuestionType(type) {
     if (type === "Text") {
-      response = <TextInput style={styles.inputStyle}></TextInput>;
+      response = (
+        <TextInput
+          style={styles.inputStyle}
+          placeholder="Write your Answer"
+          value={answer}
+          onChangeText={setAnswer}
+        ></TextInput>
+      );
     }
     if (type === "MCQ") {
       response = <Text>MCQ</Text>;
@@ -35,10 +46,20 @@ const SurveyObject = ({ route, navigation }) => {
     if (type === "YESNO") {
       response = (
         <View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setAnswer("Yes");
+            }}
+          >
             <Text>Yes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setAnswer("No");
+            }}
+          >
             <Text>No</Text>
           </TouchableOpacity>
         </View>
@@ -48,6 +69,23 @@ const SurveyObject = ({ route, navigation }) => {
 
   updateQuestionType(questionType);
 
+  const student = "kashif@kashif.com";
+
+  const answerObject = { answer: answer, studentName: student };
+
+  /*function postAnswer(ans) {
+    fetch(`http://192.168.1.223:8001/feedbacks/questions/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(ans),
+    });
+  }*/
+
+  function clear() {}
+
   return (
     <View style={styles.container}>
       <Text style={styles.surveyName}>{survey.surveyName}</Text>
@@ -55,17 +93,32 @@ const SurveyObject = ({ route, navigation }) => {
       <Text style={styles.numberOfQuestions}>
         Total number of questions: {questions.length}
       </Text>
+
       <Text>{displayQuestion}</Text>
-      <Text>{id}</Text>
-      <Text>{questionType}</Text>
+
       <View>{response}</View>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          setNum(num + 1);
+          if (num < questions.length) {
+            setNum(num + 1);
+          } else {
+            setNum(0);
+          }
+
+          console.log("AnswerObject", answerObject);
+          //postAnswer(answerObject);
+          fetch(`http://192.168.1.223:8001/feedbacks/questions/${id}`, {
+            method: "PATCH",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(answerObject),
+          });
         }}
       >
-        <Text>Submit</Text>
+        <Text>Next</Text>
       </TouchableOpacity>
     </View>
   );
