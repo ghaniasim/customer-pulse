@@ -27,6 +27,11 @@ const Data = ({ navigation }) => {
   useEffect(() => {
     getData();
   }, [data]);
+
+  function AnsweredQuestions() {
+    const questionArray = data.questions;
+  }
+
   return (
     <View>
       <Text style={styles.createSurvey}>Student Profile</Text>
