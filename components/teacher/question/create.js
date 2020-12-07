@@ -8,6 +8,7 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
+import RadioButtonRN from "radio-buttons-react-native";
 
 const Create = ({ navigation }) => {
   // creating the object for the survey array
@@ -24,6 +25,7 @@ const Create = ({ navigation }) => {
   const [questionNumber, setQuestionNumber] = useState();
   const [questionType, setQuestionType] = useState("");
   const [questionText, setQuestionText] = useState("");
+  const [questionOptions, setQuestionOptions] = useState([]);
 
   // the question object
 
@@ -33,6 +35,7 @@ const Create = ({ navigation }) => {
     questionNumber: questionNumber,
     questionType: questionType,
     questionText: questionText,
+    questionOptions: questionOptions,
   };
 
   //the survey object
@@ -48,6 +51,65 @@ const Create = ({ navigation }) => {
     setQuestionText("");
     setQuestionType("");
   }
+
+  const data = [
+    {
+      label: "Text",
+    },
+    {
+      label: "Multiple Choice Question",
+    },
+  ];
+
+  const [MCQtype, setMCQtype] = useState();
+
+  const option = [
+    {
+      label: "Respondent can select one option",
+    },
+    {
+      label: "Respondent can select multiple options",
+    },
+  ];
+
+  function MCQ(e) {
+    if (e.label == "Text") {
+      setMCQtype();
+      console.log("Question Type:", questionType);
+      setOptionText();
+    } else {
+      setMCQtype(option);
+      console.log("Question Type:", questionType);
+    }
+  }
+
+  function RadioCheck(e) {
+    if (e.label == "Respondent can select one option") {
+      setQuestionType("Radio");
+      //console.log("Question Type:", questionType);
+      setOptionText(optionTextInput);
+    } else {
+      setQuestionType("Checkbox");
+      //console.log("Question Type:", questionType);
+      setOptionText(optionTextInput);
+    }
+  }
+
+  const [optionText, setOptionText] = useState();
+
+  const [WroteOption, setWroteOption] = useState();
+  var choice;
+
+  const optionTextInput = (
+    <TextInput
+      style={styles.inputOption}
+      placeholder="Write you option"
+      value={choice}
+      onChangeText={(val) => {
+        setWroteOption({ option: val });
+      }}
+    ></TextInput>
+  );
 
   //returning
 
@@ -83,32 +145,51 @@ const Create = ({ navigation }) => {
 
       {/*below are three buttons to choose answer type (Text, YESNO or MCQ)*/}
       <Text style={styles.chooseText}>Choose answer category:</Text>
-      <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity
-          style={styles.typeButton}
-          onPress={() => {
+
+      <View>
+        <RadioButtonRN
+          data={data}
+          selectedBtn={(e) => {
+            MCQ(e);
             setQuestionType("Text");
           }}
-        >
-          <Text>Text</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.typeButton}
-          onPress={() => {
-            setQuestionType("YESNO");
+        />
+        <View style={{ alignItems: "center" }}>
+          <Text style={{ textAlign: "center" }}>--------</Text>
+        </View>
+
+        <RadioButtonRN
+          data={MCQtype}
+          selectedBtn={(e) => {
+            RadioCheck(e);
           }}
-        >
-          <Text>YES/NO</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.typeButton}
-          onPress={() => {
-            setQuestionType("MCQ");
-          }}
-        >
-          <Text>MCQ</Text>
-        </TouchableOpacity>
+        />
+        <View>{optionText}</View>
       </View>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          questionOptions.push(WroteOption);
+          console.log("Options:", questionOptions);
+          setWroteOption();
+        }}
+      >
+        <Text>Add Option</Text>
+      </TouchableOpacity>
+
+      <FlatList
+        style={{ marginTop: "8%", margin: "5%" }}
+        keyExtractor={(option) => option.option}
+        data={questionOptions}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity style={styles.questionItem}>
+              <Text>{item.option}</Text>
+            </TouchableOpacity>
+          );
+        }}
+      ></FlatList>
 
       {/*Below is the button to add question*/}
       <TouchableOpacity
@@ -116,9 +197,10 @@ const Create = ({ navigation }) => {
         onPress={() => {
           questionArray.push(question);
           Clear();
+          setQuestionOptions([]);
         }}
       >
-        <Text>Add</Text>
+        <Text>Add Question</Text>
       </TouchableOpacity>
 
       <FlatList
@@ -230,6 +312,17 @@ const styles = StyleSheet.create({
   },
   inputQuestion: {
     marginBottom: "5%",
+    textAlign: "center",
+    borderColor: "#ccc",
+    height: 50,
+    width: "80%",
+    marginTop: "5%",
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#000000",
+  },
+  inputOption: {
+    margin: "11%",
     textAlign: "center",
     borderColor: "#ccc",
     height: 50,

@@ -8,7 +8,7 @@ const feedbackSchema = mongoose.Schema({
       questionNumber: String,
       questionType: String,
       questionText: String,
-      questionOptions: [],
+      questionOptions: [{ option: String }],
       answers: [{ studentName: String, answer: String }],
     },
   ],
