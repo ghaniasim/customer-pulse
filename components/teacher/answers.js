@@ -17,6 +17,31 @@ const Answers = ({ route, navigation }) => {
 
   const answers = questionObject.answers;
   const question = questionObject.questionText;
+  const questionType = questionObject.questionType;
+  const questionOptions = questionObject.questionOptions;
+
+  const optionStrings = [];
+  const answerMapped = answers.map((answer) =>
+    optionStrings.push(answer.answer)
+  );
+
+  console.log("Options Strings:", optionStrings);
+
+  function countInArray(array, what) {
+    return array.filter((item) => item == what).length;
+  }
+  const data = [];
+
+  if (questionType == "Text" || questionType == "Radio") {
+    questionOptions.map((question) =>
+      data.push({
+        x: question.option,
+        y: countInArray(optionStrings, question.option),
+      })
+    );
+  }
+
+  console.log("Data array for pie chart:", data);
 
   var numOfAnswers = answers.length;
 
@@ -30,6 +55,7 @@ const Answers = ({ route, navigation }) => {
       <Text style={styles.numberOfAnswers}>
         Number of Answers: {numOfAnswers}
       </Text>
+
       <FlatList
         keyExtractor={(answerObject) => answerObject.answer}
         data={answers}

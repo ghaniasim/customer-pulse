@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import CheckBox from "@react-native-community/checkbox";
 import {
   StyleSheet,
   Text,
@@ -9,6 +10,7 @@ import {
   Button,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import RadioButtonRN from "radio-buttons-react-native";
 
 //Obtaining the entire survey object from previous screen (Data.js)
 const SurveyObject = ({ route, navigation }) => {
@@ -25,9 +27,15 @@ const SurveyObject = ({ route, navigation }) => {
 
   const questionType = questions[num].questionType;
 
+  const questionOptions = questions[num].questionOptions;
+  const data = [];
+  const mapped = questionOptions.map((question) =>
+    data.push({ label: question.option })
+  );
+
   var response;
 
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState();
 
   function updateQuestionType(type) {
     if (type === "Text") {
@@ -40,29 +48,50 @@ const SurveyObject = ({ route, navigation }) => {
         ></TextInput>
       );
     }
-    if (type === "MCQ") {
-      response = <Text>MCQ</Text>;
-    }
-    if (type === "YESNO") {
+    if (type === "Radio") {
       response = (
-        <View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setAnswer("Yes");
-            }}
-          >
-            <Text>Yes</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setAnswer("No");
-            }}
-          >
-            <Text>No</Text>
-          </TouchableOpacity>
-        </View>
+        <RadioButtonRN
+          data={data}
+          selectedBtn={(e) => {
+            setAnswer(e.label);
+          }}
+        />
+      );
+    }
+    if (type === "Checkbox") {
+      response = (
+        <FlatList
+          style={{ marginTop: "8%", margin: "5%" }}
+          keyExtractor={(option) => option.option}
+          data={questionOptions}
+          renderItem={({ item }) => {
+            return (
+              <View style={{ flexDirection: "row" }}>
+                <CheckBox
+                  disabled={false}
+                  value={false}
+                  onValueChange={(newValue) => {
+                    if (newValue === true) {
+                      setAnswer(item.option);
+                      fetch(
+                        `http://192.168.1.223:8001/feedbacks/questions/${id}`,
+                        {
+                          method: "PATCH",
+                          headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(answerObject),
+                        }
+                      );
+                    }
+                  }}
+                ></CheckBox>
+                <Text>{item.option}</Text>
+              </View>
+            );
+          }}
+        ></FlatList>
       );
     }
   }
@@ -84,8 +113,20 @@ const SurveyObject = ({ route, navigation }) => {
     });
   }*/
 
-  function clear() {}
+  function clear() {
+    setAnswer();
+  }
 
+  var realNumber = 0;
+
+  /* function back(realNumber) {
+    if (realNumber < questions.length) {
+      realNumber + 1;
+      setNum(realNumber);
+    } else {
+      navigation.navigate("Data");
+    }
+  }*/
   return (
     <View style={styles.container}>
       <Text style={styles.surveyName}>{survey.surveyName}</Text>
@@ -97,25 +138,29 @@ const SurveyObject = ({ route, navigation }) => {
       <Text>{displayQuestion}</Text>
 
       <View>{response}</View>
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          if (num < questions.length) {
+          if (num < questions.length - 1) {
             setNum(num + 1);
+            console.log("num being printed:", num);
           } else {
-            setNum(0);
+            navigation.navigate("Data");
           }
 
-          console.log("AnswerObject", answerObject);
-          //postAnswer(answerObject);
-          fetch(`http://192.168.1.223:8001/feedbacks/questions/${id}`, {
-            method: "PATCH",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(answerObject),
-          });
+          if (questionType == "Text" || questionType == "Radio") {
+            fetch(`http://192.168.1.223:8001/feedbacks/questions/${id}`, {
+              method: "PATCH",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(answerObject),
+            });
+          }
+
+          clear();
         }}
       >
         <Text>Next</Text>
