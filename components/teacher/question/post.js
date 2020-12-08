@@ -48,7 +48,7 @@ const Post = ({ navigation }) => {
           navigation.navigate("Profile");
         }}
       >
-        <Text>Go to Home</Text>
+        <Text>Confirm</Text>
       </TouchableOpacity>
     </View>
   );

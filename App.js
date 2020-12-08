@@ -24,7 +24,7 @@ const navigator = createStackNavigator(
     Post: Post,
   },
   {
-    initialRouteName: "Profile",
+    initialRouteName: "Login",
     defaultNavigationOptions: {
       title: "Feedback",
     },

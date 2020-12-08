@@ -75,7 +75,7 @@ const Profile = (props) => {
 
       <FlatList
         style={{ marginTop: "8%", margin: "5%" }}
-        keyExtractor={(survey) => survey.id}
+        keyExtractor={(survey) => survey._id}
         data={surveys}
         renderItem={({ item }) => {
           return (

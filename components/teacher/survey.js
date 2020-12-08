@@ -21,6 +21,7 @@ const Survey = ({ route, navigation }) => {
       <Text style={styles.numberOfQuestions}>
         Total number of questions: {questions.length}
       </Text>
+
       <FlatList
         keyExtractor={(question) => question._id}
         data={questions}

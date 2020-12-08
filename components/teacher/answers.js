@@ -73,7 +73,7 @@ const Answers = ({ route, navigation }) => {
       <View>{chart}</View>
 
       <FlatList
-        keyExtractor={(answerObject) => answerObject.answer}
+        keyExtractor={(answerObject) => answerObject._id}
         data={answers}
         renderItem={({ item }) => {
           return (

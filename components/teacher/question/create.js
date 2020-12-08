@@ -9,8 +9,12 @@ import {
   FlatList,
 } from "react-native";
 import RadioButtonRN from "radio-buttons-react-native";
+import { LogBox } from "react-native";
 
 const Create = ({ navigation }) => {
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
   // creating the object for the survey array
 
   const [teacherName, setTeacherName] = useState(
@@ -136,6 +140,8 @@ const Create = ({ navigation }) => {
         />
 
         <TextInput
+          multiline={true}
+          numberOfLines={4}
           style={styles.inputQuestion}
           placeholder="Write your question"
           value={questionText}
