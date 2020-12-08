@@ -32,13 +32,17 @@ const Data = ({ navigation }) => {
     const questionArray = data.questions;
   }
 
+  if (loaded) {
+    data.reverse();
+  }
+
   return (
     <View>
       <Text style={styles.createSurvey}>Student Profile</Text>
       <Text style={styles.createSurvey}>Student Name</Text>
       <FlatList
         style={{ marginTop: "15%", margin: "5%" }}
-        keyExtractor={(survey) => survey.id}
+        keyExtractor={(survey) => survey._id}
         data={data}
         renderItem={({ item }) => {
           return (
