@@ -4,5 +4,6 @@ node_js:
 before_script:
   - npm i
   - npm i mocha -g
+  - yarn install
 script:
-  - npm test
+  - yarn test
