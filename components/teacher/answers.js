@@ -9,6 +9,7 @@ import {
   Button,
   ScrollView,
 } from "react-native";
+import PureChart from "react-native-pure-chart";
 
 const Answers = ({ route, navigation }) => {
   const [questionObject, setQuestionObject] = useState(
@@ -32,13 +33,26 @@ const Answers = ({ route, navigation }) => {
   }
   const data = [];
 
-  if (questionType == "Text" || questionType == "Radio") {
+  function getRandomColor() {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  var chart;
+  if (questionType == "Checkbox" || questionType == "Radio") {
     questionOptions.map((question) =>
       data.push({
-        x: question.option,
-        y: countInArray(optionStrings, question.option),
+        label: question.option,
+        value: countInArray(optionStrings, question.option),
+        color: getRandomColor(),
       })
     );
+
+    chart = <PureChart data={data} type="pie" />;
   }
 
   console.log("Data array for pie chart:", data);
@@ -55,6 +69,8 @@ const Answers = ({ route, navigation }) => {
       <Text style={styles.numberOfAnswers}>
         Number of Answers: {numOfAnswers}
       </Text>
+
+      <View>{chart}</View>
 
       <FlatList
         keyExtractor={(answerObject) => answerObject.answer}
