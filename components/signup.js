@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     padding: 35,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffe5d9",
   },
   inputStyle: {
     width: "100%",

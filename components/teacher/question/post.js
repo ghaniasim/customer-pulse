@@ -23,7 +23,7 @@ const Post = ({ navigation }) => {
     body: JSON.stringify(survey),
   });
   return (
-    <View>
+    <View style={{ backgroundColor: "#ffe5d9" }}>
       <Text style={styles.chooseText}>Summary</Text>
       <Text style={styles.chooseText}>{survey.surveyName}</Text>
       <Text style={styles.chooseText}>Survey by: {survey.teacherName}</Text>

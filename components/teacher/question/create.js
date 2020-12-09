@@ -118,7 +118,7 @@ const Create = ({ navigation }) => {
   //returning
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "#ffe5d9" }}>
       {/*Topic of the page*/}
       <Text style={styles.createSurvey}>Create Your Survey</Text>
 

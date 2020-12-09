@@ -90,7 +90,7 @@ const Answers = ({ route, navigation }) => {
         Number of Answers: {numOfAnswers}
       </Text>
 
-      <View>{chart}</View>
+      <View style={{ alignItems: "center" }}>{chart}</View>
 
       <View>{list}</View>
     </View>
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: "3%",
+    backgroundColor: "#ffe5d9",
 
     justifyContent: "center",
   },

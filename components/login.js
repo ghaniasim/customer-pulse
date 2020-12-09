@@ -33,7 +33,6 @@ const LoginScreen = ({ navigation }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         setEmail("");
         setPassword("");
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     padding: 35,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffe5d9",
   },
   inputStyle: {
     width: "100%",
@@ -88,6 +87,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     padding: 30,
+    color: "blue",
   },
 });
 

@@ -50,7 +50,7 @@ const Profile = (props) => {
   });
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#ffe5d9" }}>
       <View styles={{ marginBottom: 20 }}>
         <Text style={styles.profileText}>Profile </Text>
 
@@ -62,7 +62,7 @@ const Profile = (props) => {
             props.navigation.navigate("Data");
           }}
         >
-          <Text>Student HomePage</Text>
+          <Text>View Surveys</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

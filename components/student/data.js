@@ -55,7 +55,8 @@ const Data = ({ navigation }) => {
   }
 
   return (
-    <View>
+    <View style={{ backgroundColor: "#ffe5d9" }}>
+      <Text style={styles.Text}>Surveys</Text>
       <FlatList
         style={{ marginTop: "15%", margin: "5%" }}
         keyExtractor={(survey) => survey._id}
@@ -126,6 +127,15 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#000000",
     marginTop: 5,
+  },
+  Text: {
+    textAlign: "center",
+    color: "#023e8a",
+    fontWeight: "bold",
+    fontSize: 30,
+    width: "100%",
+    marginBottom: "3%",
+    marginTop: "5%",
   },
   createSurvey: {
     textAlign: "center",

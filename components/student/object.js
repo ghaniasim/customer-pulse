@@ -105,31 +105,12 @@ const SurveyObject = ({ route, navigation }) => {
 
   const answerObject = { answer: answer, studentName: student };
 
-  /*function postAnswer(ans) {
-    fetch(`http://192.168.1.223:8001/feedbacks/questions/${id}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ans),
-    });
-  }*/
-
   function clear() {
     setAnswer();
   }
 
   var realNumber = 0;
 
-  /* function back(realNumber) {
-    if (realNumber < questions.length) {
-      realNumber + 1;
-      setNum(realNumber);
-    } else {
-      navigation.navigate("Data");
-    }
-  }*/
   return (
     <View style={styles.container}>
       <Text style={styles.surveyName}>{survey.surveyName}</Text>
