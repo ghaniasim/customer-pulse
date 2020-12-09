@@ -10,32 +10,16 @@ import {
 import firebase from "../database/firebase";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [loading, setLoading] = useState(false);
-
-  updateInputVal = (val, prop) => {
-    if (prop === "email") {
-      setEmail(val);
-    }
-    if (prop === "password") {
-      setPassword(val);
-    }
-  };
+  var email;
+  var password;
 
   userLogin = () => {
-    if ({ email } === "" && { password } === "") {
-      window.alert("Enter details to signin!");
-    } else {
-      setLoading(true);
-    }
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        setLoading(false);
-        setEmail("");
-        setPassword("");
+        email = "";
+        password = "";
         navigation.navigate("Profile");
       });
   };
@@ -46,13 +30,13 @@ const LoginScreen = ({ navigation }) => {
         style={styles.inputStyle}
         placeholder="Email"
         value={email}
-        onChangeText={(val) => updateInputVal(val, "email")}
+        onChangeText={(val) => (email = val)}
       />
       <TextInput
         style={styles.inputStyle}
         placeholder="Password"
         value={password}
-        onChangeText={(val) => updateInputVal(val, "password")}
+        onChangeText={(val) => (password = val)}
         maxLength={15}
         secureTextEntry={true}
       />
