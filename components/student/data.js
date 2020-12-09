@@ -6,13 +6,16 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import firebase from "../../database/firebase";
 
 const Data = ({ navigation }) => {
   const [data, setData] = useState();
   const [loaded, setLoaded] = useState(false);
 
   async function getData() {
-    const res = await fetch(`http://192.168.1.223:8001/feedbacks`);
+    const res = await fetch(
+      `https://customer-pulse-backend.herokuapp.com/feedbacks`
+    );
     res
       .json()
       .then((res) => {
@@ -28,6 +31,8 @@ const Data = ({ navigation }) => {
     getData();
   }, [data]);
 
+  var userName = firebase.auth().currentUser.email;
+
   function AnsweredQuestions() {
     const questionArray = data.questions;
   }
@@ -36,10 +41,22 @@ const Data = ({ navigation }) => {
     data.reverse();
   }
 
+  function ansCheck(item) {
+    var checked;
+    const questionArray = item.questions;
+    questionArray.map((obj) => {
+      obj.answers.map((answer) => {
+        if (answer.studentName == userName) {
+          checked = true;
+        }
+      });
+    });
+    return checked;
+  }
+
   return (
-    <View>
-      <Text style={styles.createSurvey}>Student Profile</Text>
-      <Text style={styles.createSurvey}>Student Name</Text>
+    <View style={{ backgroundColor: "#ffe5d9" }}>
+      <Text style={styles.Text}>Surveys</Text>
       <FlatList
         style={{ marginTop: "15%", margin: "5%" }}
         keyExtractor={(survey) => survey._id}
@@ -47,11 +64,12 @@ const Data = ({ navigation }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              style={styles.button}
+              style={ansCheck(item) ? styles.buttonA : styles.button}
               onPress={() => {
-                navigation.navigate("SurveyObject", {
-                  survey: item,
-                });
+                if (!ansCheck(item))
+                  navigation.navigate("SurveyObject", {
+                    survey: item,
+                  });
               }}
             >
               <Text style={styles.surveyTitle}>
@@ -92,6 +110,32 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#000000",
     marginTop: 5,
+  },
+  buttonA: {
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    backgroundColor: "#ffffff",
+    elevation: 2, // Android
+    height: 50,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#000000",
+    marginTop: 5,
+  },
+  Text: {
+    textAlign: "center",
+    color: "#023e8a",
+    fontWeight: "bold",
+    fontSize: 30,
+    width: "100%",
+    marginBottom: "3%",
+    marginTop: "5%",
   },
   createSurvey: {
     textAlign: "center",

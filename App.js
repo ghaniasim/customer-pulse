@@ -26,7 +26,7 @@ const navigator = createStackNavigator(
   {
     initialRouteName: "Login",
     defaultNavigationOptions: {
-      title: "Feedback",
+      title: "FeedBack",
     },
   }
 );

@@ -27,7 +27,9 @@ const Profile = (props) => {
   const [loaded, setLoaded] = useState(false);
 
   async function getData() {
-    const res = await fetch(`http://192.168.1.223:8001/feedbacks/${userEmail}`);
+    const res = await fetch(
+      `https://customer-pulse-backend.herokuapp.com/feedbacks/${userEmail}`
+    );
     res
       .json()
       .then((res) => {
@@ -48,7 +50,7 @@ const Profile = (props) => {
   });
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#ffe5d9" }}>
       <View styles={{ marginBottom: 20 }}>
         <Text style={styles.profileText}>Profile </Text>
 
@@ -60,7 +62,7 @@ const Profile = (props) => {
             props.navigation.navigate("Data");
           }}
         >
-          <Text>Student HomePage</Text>
+          <Text>View Surveys</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

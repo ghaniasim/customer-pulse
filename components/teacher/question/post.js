@@ -14,7 +14,7 @@ const Post = ({ navigation }) => {
   const [survey, setSurvey] = useState(navigation.state.params.survey);
 
   console.log("Ready to post:", survey);
-  fetch("http://192.168.1.223:8001/feedbacks/survey", {
+  fetch("https://customer-pulse-backend.herokuapp.com/feedbacks/survey", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -23,7 +23,7 @@ const Post = ({ navigation }) => {
     body: JSON.stringify(survey),
   });
   return (
-    <View>
+    <View style={{ backgroundColor: "#ffe5d9" }}>
       <Text style={styles.chooseText}>Summary</Text>
       <Text style={styles.chooseText}>{survey.surveyName}</Text>
       <Text style={styles.chooseText}>Survey by: {survey.teacherName}</Text>

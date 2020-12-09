@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
 
   userLogin = () => {
     if ({ email } === "" && { password } === "") {
-      Alert.alert("Enter details to signin!");
+      window.alert("Enter details to signin!");
     } else {
       setLoading(true);
     }
@@ -33,13 +33,11 @@ const LoginScreen = ({ navigation }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log("User logged-in successfully!");
         setLoading(false);
         setEmail("");
         setPassword("");
+        navigation.navigate("Profile");
       });
-
-    navigation.navigate("Profile");
   };
 
   return (
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     padding: 35,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffe5d9",
   },
   inputStyle: {
     width: "100%",
@@ -89,6 +87,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     padding: 30,
+    color: "blue",
   },
 });
 

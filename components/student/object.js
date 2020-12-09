@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import RadioButtonRN from "radio-buttons-react-native";
+import firebase from "../../database/firebase";
 
 //Obtaining the entire survey object from previous screen (Data.js)
 const SurveyObject = ({ route, navigation }) => {
@@ -74,7 +75,7 @@ const SurveyObject = ({ route, navigation }) => {
                     if (newValue === true) {
                       setAnswer(item.option);
                       fetch(
-                        `http://192.168.1.223:8001/feedbacks/questions/${id}`,
+                        `https://customer-pulse-backend.herokuapp.com/feedbacks/questions/${id}`,
                         {
                           method: "PATCH",
                           headers: {
@@ -98,20 +99,11 @@ const SurveyObject = ({ route, navigation }) => {
 
   updateQuestionType(questionType);
 
-  const student = "kashif@kashif.com";
+  var user = firebase.auth().currentUser;
+
+  const student = user.email;
 
   const answerObject = { answer: answer, studentName: student };
-
-  /*function postAnswer(ans) {
-    fetch(`http://192.168.1.223:8001/feedbacks/questions/${id}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ans),
-    });
-  }*/
 
   function clear() {
     setAnswer();
@@ -119,14 +111,6 @@ const SurveyObject = ({ route, navigation }) => {
 
   var realNumber = 0;
 
-  /* function back(realNumber) {
-    if (realNumber < questions.length) {
-      realNumber + 1;
-      setNum(realNumber);
-    } else {
-      navigation.navigate("Data");
-    }
-  }*/
   return (
     <View style={styles.container}>
       <Text style={styles.surveyName}>{survey.surveyName}</Text>
@@ -144,20 +128,22 @@ const SurveyObject = ({ route, navigation }) => {
         onPress={() => {
           if (num < questions.length - 1) {
             setNum(num + 1);
-            console.log("num being printed:", num);
           } else {
             navigation.navigate("Data");
           }
 
           if (questionType == "Text" || questionType == "Radio") {
-            fetch(`http://192.168.1.223:8001/feedbacks/questions/${id}`, {
-              method: "PATCH",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(answerObject),
-            });
+            fetch(
+              `https://customer-pulse-backend.herokuapp.com/feedbacks/questions/${id}`,
+              {
+                method: "PATCH",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(answerObject),
+              }
+            );
           }
 
           clear();
