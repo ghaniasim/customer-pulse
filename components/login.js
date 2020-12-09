@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
 
   userLogin = () => {
     if ({ email } === "" && { password } === "") {
-      Alert.alert("Enter details to signin!");
+      window.alert("Enter details to signin!");
     } else {
       setLoading(true);
     }
@@ -33,13 +33,12 @@ const LoginScreen = ({ navigation }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log("User logged-in successfully!");
+        console.log(res);
         setLoading(false);
         setEmail("");
         setPassword("");
+        navigation.navigate("Profile");
       });
-
-    navigation.navigate("Profile");
   };
 
   return (

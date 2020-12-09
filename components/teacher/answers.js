@@ -63,15 +63,9 @@ const Answers = ({ route, navigation }) => {
     numOfAnswers = "No answers have been submitted yet";
   }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.numberOfAnswers}>{question}</Text>
-      <Text style={styles.numberOfAnswers}>
-        Number of Answers: {numOfAnswers}
-      </Text>
-
-      <View>{chart}</View>
-
+  var list;
+  if (questionType == "Text" || questionType == "Radio") {
+    list = (
       <FlatList
         keyExtractor={(answerObject) => answerObject._id}
         data={answers}
@@ -86,6 +80,19 @@ const Answers = ({ route, navigation }) => {
           );
         }}
       ></FlatList>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.numberOfAnswers}>{question}</Text>
+      <Text style={styles.numberOfAnswers}>
+        Number of Answers: {numOfAnswers}
+      </Text>
+
+      <View>{chart}</View>
+
+      <View>{list}</View>
     </View>
   );
 };

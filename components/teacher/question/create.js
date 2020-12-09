@@ -131,7 +131,7 @@ const Create = ({ navigation }) => {
       />
 
       {/*The view below asks Qnestion no. and question text*/}
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ alignItems: "center" }}>
         <TextInput
           style={styles.inputQN}
           placeholder="Number"
@@ -320,9 +320,9 @@ const styles = StyleSheet.create({
     marginBottom: "5%",
     textAlign: "center",
     borderColor: "#ccc",
-    height: 50,
-    width: "80%",
-    marginTop: "5%",
+    height: 70,
+    width: "90%",
+
     borderRadius: 10,
     borderWidth: 3,
     borderColor: "#000000",

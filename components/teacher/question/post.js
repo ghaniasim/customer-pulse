@@ -14,7 +14,7 @@ const Post = ({ navigation }) => {
   const [survey, setSurvey] = useState(navigation.state.params.survey);
 
   console.log("Ready to post:", survey);
-  fetch("http://192.168.1.223:8001/feedbacks/survey", {
+  fetch("https://customer-pulse-backend.herokuapp.com/feedbacks/survey", {
     method: "POST",
     headers: {
       Accept: "application/json",

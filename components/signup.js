@@ -34,8 +34,6 @@ const SignupScreen = ({ navigation }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log("User registered successfully!");
-
         setLoading(false);
 
         setEmail("");
