@@ -10,8 +10,8 @@ import {
 import firebase from "../database/firebase";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
   updateInputVal = (val, prop) => {
@@ -33,7 +33,6 @@ const LoginScreen = ({ navigation }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        //console.log(res);
         console.log("User logged-in successfully!");
         setLoading(false);
         setEmail("");
