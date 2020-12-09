@@ -1,6 +1,8 @@
 const assert = require("assert");
-const chai = require("chai");
-const fetch = require("node-fetch");
+const request = require("supertest")(
+  "https://customer-pulse-backend.herokuapp.com"
+);
+const expect = require("chai").expect;
 
 describe("Test", () => {
   it("Should return ok", () => {
@@ -16,13 +18,8 @@ describe("#indexOf()", () => {
 
 describe("Test API call", () => {
   it("should return status 200", async () => {
-    chai.assert.equal(
-      await fetch("https://customer-pulse-backend.herokuapp.com")
-        .then((res) => {
-          return res.status;
-        })
-        .catch((res) => console.log(res)),
-      200
-    );
+    const response = await request.get("/");
+
+    expect(response.status).to.eql(200);
   });
 });
