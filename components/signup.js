@@ -8,17 +8,14 @@ import {
   TextInput,
 } from "react-native";
 import firebase from "../database/firebase";
+import RadioButtonRN from "radio-buttons-react-native";
 
 const SignupScreen = ({ navigation }) => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   updateInputVal = (val, prop) => {
-    if (prop === "name") {
-      setName(val);
-    }
     if (prop === "email") {
       setEmail(val);
     }
@@ -37,13 +34,10 @@ const SignupScreen = ({ navigation }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        res.user.updateProfile({
-          name: { name },
-        });
         console.log("User registered successfully!");
 
         setLoading(false);
-        setName("");
+
         setEmail("");
         setPassword("");
 
@@ -53,12 +47,6 @@ const SignupScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="Name"
-        value={name}
-        onChangeText={(val) => updateInputVal(val, "name")}
-      />
       <TextInput
         style={styles.inputStyle}
         placeholder="Email"
@@ -73,6 +61,7 @@ const SignupScreen = ({ navigation }) => {
         maxLength={15}
         secureTextEntry={true}
       />
+
       <Button color="#3740FE" title="Signup" onPress={() => registerUser()} />
     </View>
   );
