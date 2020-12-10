@@ -11,8 +11,10 @@ import {
 } from "react-native";
 
 const Post = ({ navigation }) => {
+  //obtaining the survey object created in create.js
   const [survey, setSurvey] = useState(navigation.state.params.survey);
 
+  //posting the survey object recieved from create.js
   console.log("Ready to post:", survey);
   fetch("https://customer-pulse-backend.herokuapp.com/feedbacks/survey", {
     method: "POST",

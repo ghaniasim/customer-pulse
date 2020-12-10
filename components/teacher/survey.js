@@ -10,8 +10,11 @@ import {
 } from "react-native";
 
 const Survey = ({ route, navigation }) => {
+  //The following survey constant recieves the data sent from the profile screen via
+  //react navigation. It is the whole survey object.
   const [survey, setSurvey] = useState(navigation.state.params.survey);
 
+  //Taking the questions array of the recieved survey
   const questions = survey.questions;
 
   return (
@@ -21,7 +24,7 @@ const Survey = ({ route, navigation }) => {
       <Text style={styles.numberOfQuestions}>
         Total number of questions: {questions.length}
       </Text>
-
+      {/*The flatlist here takes the questions array and displays the information from the objects of the array */}
       <FlatList
         keyExtractor={(question) => question._id}
         data={questions}

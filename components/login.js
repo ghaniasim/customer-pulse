@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import {
-  Text,
-  StyleSheet,
-  View,
-  Button,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import React from "react";
+import { Text, StyleSheet, View, Button, TextInput } from "react-native";
 import firebase from "../database/firebase";
 
 const LoginScreen = ({ navigation }) => {
   var email;
   var password;
 
+  //Authenctication with firebase auth function
   userLogin = () => {
     firebase
       .auth()

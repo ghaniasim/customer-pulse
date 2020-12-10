@@ -11,10 +11,12 @@ import firebase from "../database/firebase";
 import RadioButtonRN from "radio-buttons-react-native";
 
 const SignupScreen = ({ navigation }) => {
+  // creating three constants email, password and loading with useState hooks
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // a function that checks the textinput values and sets them equal to email or pasword
   updateInputVal = (val, prop) => {
     if (prop === "email") {
       setEmail(val);
@@ -24,6 +26,7 @@ const SignupScreen = ({ navigation }) => {
     }
   };
 
+  // registering a user with firebase auth
   const registerUser = () => {
     if ({ email } === "" && { password } === "") {
       Alert.alert("Enter details to signup!");

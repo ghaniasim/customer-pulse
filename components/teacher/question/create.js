@@ -56,6 +56,7 @@ const Create = ({ navigation }) => {
     setQuestionType("");
   }
 
+  //Data for radio buttons
   const data = [
     {
       label: "Text",
@@ -66,7 +67,7 @@ const Create = ({ navigation }) => {
   ];
 
   const [MCQtype, setMCQtype] = useState();
-
+  // data for MCQ radio buttons
   const option = [
     {
       label: "Respondent can select one option",
@@ -75,26 +76,26 @@ const Create = ({ navigation }) => {
       label: "Respondent can select multiple options",
     },
   ];
-
+  //if the user clicks the text radio button then MCQ and Options are null otherwise MCQ will have options
   function MCQ(e) {
     if (e.label == "Text") {
       setMCQtype();
-      console.log("Question Type:", questionType);
+
       setOptionText();
     } else {
       setMCQtype(option);
-      console.log("Question Type:", questionType);
     }
   }
 
+  //this function checks which radio button was clicked and gives the text input to write otpions
   function RadioCheck(e) {
     if (e.label == "Respondent can select one option") {
       setQuestionType("Radio");
-      //console.log("Question Type:", questionType);
+
       setOptionText(optionTextInput);
     } else {
       setQuestionType("Checkbox");
-      //console.log("Question Type:", questionType);
+
       setOptionText(optionTextInput);
     }
   }
@@ -149,7 +150,7 @@ const Create = ({ navigation }) => {
         />
       </View>
 
-      {/*below are three buttons to choose answer type (Text, YESNO or MCQ)*/}
+      {/*below are radio buttons to choose answer type (Text or MCQ(Radio) or MCQ(Checkbox))*/}
       <Text style={styles.chooseText}>Choose answer category:</Text>
 
       <View>
@@ -230,7 +231,6 @@ const Create = ({ navigation }) => {
         style={styles.buttonBottom}
         onPress={() => {
           navigation.navigate("Post", { survey: surveyObject });
-          //console.log("survey object is here:", surveyObject);
         }}
       >
         <Text>Create Survey</Text>

@@ -10,6 +10,7 @@ import firebase from "../../database/firebase";
 
 var userEmail;
 const Profile = (props) => {
+  //the following function obtains the current user when authentication is changed
   function getCurrentUser() {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -23,9 +24,11 @@ const Profile = (props) => {
     getCurrentUser();
   }, [userEmail]);
 
+  //surveys constant fetches the surveys created by this user from API
   const [surveys, setSurveys] = useState();
   const [loaded, setLoaded] = useState(false);
 
+  //fetching the data
   async function getData() {
     const res = await fetch(
       `https://customer-pulse-backend.herokuapp.com/feedbacks/${userEmail}`
@@ -40,7 +43,7 @@ const Profile = (props) => {
         console.log("error", error);
       });
   }
-
+  //reversing the fetched data array so the latest addition appears on top
   if (loaded) {
     surveys.reverse();
   }

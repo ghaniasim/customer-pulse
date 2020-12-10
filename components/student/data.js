@@ -12,6 +12,7 @@ const Data = ({ navigation }) => {
   const [data, setData] = useState();
   const [loaded, setLoaded] = useState(false);
 
+  //fetching all the surveys from the API
   async function getData() {
     const res = await fetch(
       `https://customer-pulse-backend.herokuapp.com/feedbacks`
@@ -31,6 +32,7 @@ const Data = ({ navigation }) => {
     getData();
   }, [data]);
 
+  //getting the current user
   var userName = firebase.auth().currentUser.email;
 
   function AnsweredQuestions() {
@@ -41,6 +43,7 @@ const Data = ({ navigation }) => {
     data.reverse();
   }
 
+  //this function checks if user has answered a question
   function ansCheck(item) {
     var checked;
     const questionArray = item.questions;
@@ -54,6 +57,7 @@ const Data = ({ navigation }) => {
     return checked;
   }
 
+  // returning for this component
   return (
     <View style={{ backgroundColor: "#ffe5d9" }}>
       <Text style={styles.Text}>Surveys</Text>

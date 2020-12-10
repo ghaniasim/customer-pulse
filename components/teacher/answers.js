@@ -12,27 +12,32 @@ import {
 import PureChart from "react-native-pure-chart";
 
 const Answers = ({ route, navigation }) => {
+  //recieving the data sent from previous screen via react navigation
   const [questionObject, setQuestionObject] = useState(
     navigation.state.params.questionObject
   );
 
+  //answers array of the question
   const answers = questionObject.answers;
+  //question text of the question object
   const question = questionObject.questionText;
+  //question type of the question object (Text, Radio or Checkbox)
   const questionType = questionObject.questionType;
+  //the options of this question
   const questionOptions = questionObject.questionOptions;
 
+  //mapping the question options to another array to display those strings in a flatlist
   const optionStrings = [];
   const answerMapped = answers.map((answer) =>
     optionStrings.push(answer.answer)
   );
 
-  console.log("Options Strings:", optionStrings);
-
+  //a function to calculate the value how many times a certain answer option has been chosen
   function countInArray(array, what) {
     return array.filter((item) => item == what).length;
   }
   const data = [];
-
+  //random color generator for the graph
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
     var color = "#";
@@ -42,6 +47,7 @@ const Answers = ({ route, navigation }) => {
     return color;
   }
 
+  //chart will only show up in case MCQs and not text answers
   var chart;
   if (questionType == "Checkbox" || questionType == "Radio") {
     questionOptions.map((question) =>
@@ -52,10 +58,9 @@ const Answers = ({ route, navigation }) => {
       })
     );
 
+    //creating the chart with PureChart library
     chart = <PureChart data={data} type="pie" />;
   }
-
-  console.log("Data array for pie chart:", data);
 
   var numOfAnswers = answers.length;
 
@@ -63,6 +68,7 @@ const Answers = ({ route, navigation }) => {
     numOfAnswers = "No answers have been submitted yet";
   }
 
+  //flatlist is not displayed in case of the checkbox type questions
   var list;
   if (questionType == "Text" || questionType == "Radio") {
     list = (

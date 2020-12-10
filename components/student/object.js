@@ -20,16 +20,20 @@ const SurveyObject = ({ route, navigation }) => {
   //taking out the questions array
   const questions = survey.questions;
 
+  //a number to loop throught the array
   const [num, setNum] = useState(0);
 
+  //the question text inside the question object of questions array
   const displayQuestion = questions[num].questionText;
 
+  //every object on MongoDB has an id
   const id = questions[num]._id;
 
   const questionType = questions[num].questionType;
 
   const questionOptions = questions[num].questionOptions;
   const data = [];
+  //mapping to create a new array for radio buttons
   const mapped = questionOptions.map((question) =>
     data.push({ label: question.option })
   );
@@ -38,6 +42,7 @@ const SurveyObject = ({ route, navigation }) => {
 
   const [answer, setAnswer] = useState();
 
+  //setting the appropriate response for different question types
   function updateQuestionType(type) {
     if (type === "Text") {
       response = (
